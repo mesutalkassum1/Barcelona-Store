@@ -17,5 +17,12 @@ namespace Barcelona_Store.Controllers
             IEnumerable<Category> objCategoryList = _context.Categories.ToList();
             return View(objCategoryList);
         }
+
+        //GET
+        public IActionResult Create()
+        {
+            
+            return View();
+        }
     }
 }
