@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Barcelona_Store.Models
+namespace BarcelonaStore.Models
 {
     public class Category
     {

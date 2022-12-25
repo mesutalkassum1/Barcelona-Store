@@ -1,5 +1,6 @@
 ﻿using Barcelona_Store.Data;
-using Barcelona_Store.Models;
+
+using BarcelonaStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barcelona_Store.Controllers

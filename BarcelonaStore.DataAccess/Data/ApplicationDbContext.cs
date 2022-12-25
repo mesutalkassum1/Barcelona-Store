@@ -1,4 +1,4 @@
-﻿using Barcelona_Store.Models;
+﻿using BarcelonaStore.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Barcelona_Store.Data
