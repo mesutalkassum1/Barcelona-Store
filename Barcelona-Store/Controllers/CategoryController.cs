@@ -7,15 +7,15 @@ namespace Barcelona_Store.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+        public CategoryController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _context.Categories.ToList();
+            IEnumerable<Category> objCategoryList = _db.Categories.ToList();
             return View(objCategoryList);
         }
 
@@ -35,8 +35,8 @@ namespace Barcelona_Store.Controllers
                 ModelState.AddModelError("Name", "DisplayOrder ile Name aynı olmaması lazim");
             }
             if (ModelState.IsValid) {
-            _context.Categories.Add(obj);
-            _context.SaveChanges();
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
             TempData["success"] = "Category Created Successfully";
             return RedirectToAction("Index"); 
             }
@@ -50,13 +50,15 @@ namespace Barcelona_Store.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _context.Categories.Find(id);
+            //var categoryFromDb = _context.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(u => u.Name == "id");
+            //var categoryFromDbSingle = _context.Categories.SingleOrDefault(u=>u.Id==id);
 
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
         //POST
         [HttpPost]
@@ -69,8 +71,8 @@ namespace Barcelona_Store.Controllers
             }
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(obj);
-                _context.SaveChanges();
+               _db.Categories.Update(obj);
+               _db.SaveChanges();
                 TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
@@ -83,7 +85,7 @@ namespace Barcelona_Store.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _context.Categories.Find(id);
+            var categoryFromDb = _db.Categories.Find(id);
 
             if (categoryFromDb == null)
             {
@@ -96,13 +98,13 @@ namespace Barcelona_Store.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _context.Categories.Find(id);
+            var obj = _db.Categories.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(obj);
-            _context.SaveChanges();
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
             TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index");
         }
