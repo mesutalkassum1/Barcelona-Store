@@ -24,5 +24,21 @@ namespace Barcelona_Store.Controllers
             
             return View();
         }
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category obj)
+        {
+            if (obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("Name", "DisplayOrder ile Name aynı olmaması lazim");
+            }
+            if (ModelState.IsValid) {
+            _context.Categories.Add(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index"); 
+            }
+            return View(obj);
+        }
     }
 }
