@@ -36,6 +36,7 @@ namespace Barcelona_Store.Controllers
             if (ModelState.IsValid) {
             _context.Categories.Add(obj);
             _context.SaveChanges();
+            TempData["success"] = "Category Created Successfully";
             return RedirectToAction("Index"); 
             }
             return View(obj);
@@ -69,9 +70,40 @@ namespace Barcelona_Store.Controllers
             {
                 _context.Categories.Update(obj);
                 _context.SaveChanges();
+                TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+        //GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoryFromDb = _context.Categories.Find(id);
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        //POST
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _context.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _context.Categories.Remove(obj);
+            _context.SaveChanges();
+            TempData["success"] = "Category Deleted Successfully";
+            return RedirectToAction("Index");
         }
     }
 }
