@@ -45,7 +45,7 @@ namespace BarcelonaStore.DataAccess.Repository
 
         public void RemoveRange(IEnumerable<T> entitiy)
         {
-            
+            dbSet.RemoveRange(entitiy);
         }
     }
 }
