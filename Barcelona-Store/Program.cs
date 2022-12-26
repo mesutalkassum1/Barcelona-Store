@@ -1,4 +1,5 @@
 using Barcelona_Store.Data;
+using BarcelonaStore.DataAccess.Repository;
 using BarcelonaStore.DataAccess.Repository.IRepository;
 using BarcelonaStore.Models;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnnection")
     ));
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
