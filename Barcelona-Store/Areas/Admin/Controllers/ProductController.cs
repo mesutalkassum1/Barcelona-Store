@@ -2,6 +2,7 @@
 using BarcelonaStore.DataAccess.Repository.IRepository;
 using BarcelonaStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Barcelona_Store.Controllers;
 public class ProductController : Controller
@@ -22,9 +23,22 @@ public class ProductController : Controller
     public IActionResult Upsert(int? id)
     {
         Product product = new();
-        if(id == null || id == 0)
+        IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
+            u=> new SelectListItem
+            {
+                Text=u.Name,
+                Value = u.Id.ToString()
+            });
+        IEnumerable<SelectListItem> MaterialTypeList = _unitOfWork.Category.GetAll().Select(
+            u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+        if (id == null || id == 0)
         {
             //Create Product
+            ViewBag.CategoryList = CategoryList;
             return View(product);
         }
         else
