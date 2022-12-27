@@ -29,7 +29,7 @@ public class ProductController : Controller
                 Text=u.Name,
                 Value = u.Id.ToString()
             });
-        IEnumerable<SelectListItem> MaterialTypeList = _unitOfWork.Category.GetAll().Select(
+        IEnumerable<SelectListItem> MaterialTypeList = _unitOfWork.MaterialType.GetAll().Select(
             u => new SelectListItem
             {
                 Text = u.Name,
@@ -39,6 +39,7 @@ public class ProductController : Controller
         {
             //Create Product
             ViewBag.CategoryList = CategoryList;
+            ViewData["MaterialTypeList"] = MaterialTypeList;
             return View(product);
         }
         else
