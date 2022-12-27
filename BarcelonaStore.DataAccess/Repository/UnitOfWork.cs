@@ -22,7 +22,6 @@ namespace BarcelonaStore.DataAccess.Repository
         public IMaterialTypeRepository MaterialType { get; private set; }
         public IProductRepository Product { get; private set; }
 
-
         public void Save()
         {
             _db.SaveChanges();
