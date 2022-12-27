@@ -4,7 +4,6 @@ using BarcelonaStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Barcelona_Store.Controllers;
-[Area("Admin")]
 public class CategoryController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;

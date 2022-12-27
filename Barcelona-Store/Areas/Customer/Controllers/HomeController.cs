@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Barcelona_Store.Controllers;
-[Area("Costumer")]
-
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
