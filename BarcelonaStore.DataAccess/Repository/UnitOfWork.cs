@@ -16,9 +16,12 @@ namespace BarcelonaStore.DataAccess.Repository
             _db = db;
             Category = new CategoryRepository(_db);
             MaterialType = new MaterialTypeRepository(_db);
+            Product = new ProductRepository(_db);
         }
         public ICategoryRepository Category { get; private set; }
         public IMaterialTypeRepository MaterialType { get; private set; }
+        public IProductRepository Product { get; private set; }
+
 
         public void Save()
         {
