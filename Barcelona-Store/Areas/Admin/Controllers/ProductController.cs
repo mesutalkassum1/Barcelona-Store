@@ -19,44 +19,26 @@ public class ProductController : Controller
     }
 
     //GET
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
     {
-        
-        return View();
-    }
-    //POST
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(MaterialType obj)
-    {
-        if (ModelState.IsValid) {
-        _unitOfWork.MaterialType.Add(obj);
-        _unitOfWork.Save();
-        TempData["success"] = "MaterialType Created Successfully";
-        return RedirectToAction("Index"); 
-        }
-        return View(obj);
-    }
-
-    //GET
-    public IActionResult Edit(int? id)
-    {
+        Product product = new();
         if(id == null || id == 0)
         {
-            return NotFound();
+            //Create Product
+            return View(product);
         }
-        var MaterialTypeFromDbFirst = _unitOfWork.MaterialType.GetFirstOrDefault(u => u.Id == id);
-
-        if (MaterialTypeFromDbFirst == null)
+        else
         {
-            return NotFound();
+            //Update Product
         }
-        return View(MaterialTypeFromDbFirst);
+
+
+        return View(product);
     }
     //POST
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(MaterialType obj)
+    public IActionResult Upsert(MaterialType obj)
     {
         if (ModelState.IsValid)
         {
