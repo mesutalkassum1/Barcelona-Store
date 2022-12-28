@@ -74,7 +74,7 @@
 			{
 				<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
 			}
-		<a asp-controller="MaterialType" asp-action="Index" class="btn btn-secondary" style="width:150px">Back To List</a>
+		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">Back To List</a>
 		</div>
 	</div>
 		</div>
@@ -91,6 +91,13 @@
 	@{
 								<partial name="_ValidationScriptsPartial"></partial>
 	}
+	<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar_mode: 'floating',
+			});
+	</script>
 	<script>
 		function ValidateInput() {
             if (document.getElementById("uploadBox").value == "") {

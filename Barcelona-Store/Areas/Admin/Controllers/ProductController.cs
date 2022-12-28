@@ -58,85 +58,78 @@ public class ProductController : Controller
     //POST
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Upsert(ProductVM obj,IFormFile? file)
+    public IActionResult Upsert(ProductVM obj, IFormFile? file)
     {
+
         if (ModelState.IsValid)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
             if (file != null)
             {
                 string fileName = Guid.NewGuid().ToString();
-                var uplodas = Path.Combine(wwwRootPath, @"images\products");
+                var uploads = Path.Combine(wwwRootPath, @"images\products");
                 var extension = Path.GetExtension(file.FileName);
 
-                if(obj.Product.ImageUrl != null)
-				{
+                if (obj.Product.ImageUrl != null)
+                {
                     var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
                     if (System.IO.File.Exists(oldImagePath))
-					{
+                    {
                         System.IO.File.Delete(oldImagePath);
-					}
-				}
+                    }
+                }
 
-                using (var fileStreams = new FileStream(Path.Combine(uplodas, fileName + extension), FileMode.Create))
+                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                 {
                     file.CopyTo(fileStreams);
                 }
                 obj.Product.ImageUrl = @"\images\products\" + fileName + extension;
-            }
 
-            if(obj.Product.Id == 0)
-			{
+            }
+            if (obj.Product.Id == 0)
+            {
                 _unitOfWork.Product.Add(obj.Product);
-			}
-			else
-			{
+            }
+            else
+            {
                 _unitOfWork.Product.Update(obj.Product);
-			}
+            }
             _unitOfWork.Save();
-            TempData["success"] = "Product Created Successfully";
+            TempData["success"] = "Product created successfully";
             return RedirectToAction("Index");
         }
         return View(obj);
     }
-    //GET
-    public IActionResult Delete(int? id)
-    {
-        if (id == null || id == 0)
-        {
-            return NotFound();
-        }
-        var MaterialTypeFromDbFirst = _unitOfWork.MaterialType.GetFirstOrDefault(u => u.Id == id);
-
-        if (MaterialTypeFromDbFirst == null)
-        {
-            return NotFound();
-        }
-        return View(MaterialTypeFromDbFirst);
-    }
-    //POST
-    [HttpPost,ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public IActionResult DeletePOST(int? id)
-    {
-        var obj = _unitOfWork.MaterialType.GetFirstOrDefault(u => u.Id == id);
-        if (obj == null)
-        {
-            return NotFound();
-        }
-        _unitOfWork.MaterialType.Remove(obj);
-        _unitOfWork.Save();
-        TempData["success"] = "MaterialType Deleted Successfully";
-        return RedirectToAction("Index");
-    }
 
 
-	#region API ALLS    
-	[HttpGet]
+
+    #region API ALLS    
+    [HttpGet]
     public IActionResult GetAll()
 	{
         var productList = _unitOfWork.Product.GetAll(includeProperties:"Category,MaterialType");
         return Json (new {data = productList});
 	}
+    //POST
+    [HttpDelete]
+    public IActionResult Delete(int? id)
+    {
+        var obj = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id);
+        if (obj == null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+
+        var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+        if (System.IO.File.Exists(oldImagePath))
+        {
+            System.IO.File.Delete(oldImagePath);
+        }
+
+        _unitOfWork.Product.Remove(obj);
+        _unitOfWork.Save();
+        return Json(new { success = true, message = "Delete Successful" });
+
+    }
     #endregion
 }
