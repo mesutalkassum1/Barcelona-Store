@@ -19,8 +19,7 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {
-        IEnumerable<MaterialType> objMaterialTypeList = _unitOfWork.MaterialType.GetAll();
-        return View(objMaterialTypeList);
+        return View();
     }
 
     //GET
@@ -112,4 +111,14 @@ public class ProductController : Controller
         TempData["success"] = "MaterialType Deleted Successfully";
         return RedirectToAction("Index");
     }
+
+
+	#region API ALLS    
+	[HttpGet]
+    public IActionResult GetAll()
+	{
+        var productList = _unitOfWork.Product.GetAll(includeProperties:"Category,MaterialType");
+        return Json (new {data = productList});
+	}
+    #endregion
 }
