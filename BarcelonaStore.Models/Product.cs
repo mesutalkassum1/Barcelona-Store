@@ -20,25 +20,31 @@ namespace BarcelonaStore.Models
         public string ISBN { get; set; }
         [Required]
         [Range(1,10000)]
+        [Display(Name = "List Price")]
         public double ListPrice { get; set; }
+        [Display(Name = "Price For 1-4")]
         public double Price { get; set; }
         [Required]
         [Range(1, 10000)]
+        [Display(Name = "Price For 5-9")]
         public double Price5 { get; set; }
         [Required]
         [Range(1, 10000)]
+        [Display(Name = "Price For 10+")]
         public double Price10 { get; set; }
 
         [ValidateNever]
         public string ImageUrl { get; set; }
 
         [Required]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }
 
         [Required]
+		[Display(Name="Material Type")]        
         public int MaterialTypeId { get; set; }
         [ValidateNever]
         public MaterialType MaterialType { get; set; }
