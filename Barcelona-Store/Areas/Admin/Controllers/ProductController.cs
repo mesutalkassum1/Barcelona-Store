@@ -1,6 +1,7 @@
 ﻿using Barcelona_Store.Data;
 using BarcelonaStore.DataAccess.Repository.IRepository;
 using BarcelonaStore.Models;
+using BarcelonaStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,25 +23,26 @@ public class ProductController : Controller
     //GET
     public IActionResult Upsert(int? id)
     {
-        Product product = new();
-        IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(
-            u=> new SelectListItem
+        ProductVM productVM = new()
+        {
+            Product = new(),
+            CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
             {
-                Text=u.Name,
-                Value = u.Id.ToString()
-            });
-        IEnumerable<SelectListItem> MaterialTypeList = _unitOfWork.MaterialType.GetAll().Select(
-            u => new SelectListItem
+                Text = i.Name,
+                Value = i.Id.ToString()
+            }),
+            MaterialTypeList = _unitOfWork.MaterialType.GetAll().Select(i => new SelectListItem
             {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
+                Text = i.Name,
+                Value = i.Id.ToString()
+            })
+        };
         if (id == null || id == 0)
         {
             //Create Product
-            ViewBag.CategoryList = CategoryList;
-            ViewData["MaterialTypeList"] = MaterialTypeList;
-            return View(product);
+            //ViewBag.CategoryList = CategoryList;
+            //ViewData["MaterialTypeList"] = MaterialTypeList;
+            return View(productVM);
         }
         else
         {
@@ -48,7 +50,7 @@ public class ProductController : Controller
         }
 
 
-        return View(product);
+        return View(productVM);
     }
     //POST
     [HttpPost]
