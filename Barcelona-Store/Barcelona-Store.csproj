@@ -23,4 +23,8 @@
     <ProjectReference Include="..\BarcelonaStore.Models\BarcelonaStore.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

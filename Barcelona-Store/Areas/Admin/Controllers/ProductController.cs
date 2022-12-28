@@ -9,9 +9,12 @@ namespace Barcelona_Store.Controllers;
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
-    public ProductController(IUnitOfWork unitOfWork)
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
     {
         _unitOfWork = unitOfWork;
+        _hostEnvironment = hostEnvironment;
     }
 
     public IActionResult Index()
@@ -55,13 +58,26 @@ public class ProductController : Controller
     //POST
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Upsert(MaterialType obj)
+    public IActionResult Upsert(ProductVM obj,IFormFile? file)
     {
         if (ModelState.IsValid)
         {
-            _unitOfWork.MaterialType.Update(obj);
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString();
+                var uplodas = Path.Combine(wwwRootPath, @"images\products");
+                var extension = Path.GetExtension(file.FileName);
+
+                using (var fileStreams = new FileStream(Path.Combine(uplodas, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStreams);
+                }
+                obj.Product.ImageUrl = @"\images\products\" + fileName + extension;
+            }
+            _unitOfWork.Product.Add(obj.Product);
             _unitOfWork.Save();
-            TempData["success"] = "MaterialType Updated Successfully";
+            TempData["success"] = "Product Created Successfully";
             return RedirectToAction("Index");
         }
         return View(obj);
