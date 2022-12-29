@@ -1,22 +1,36 @@
-﻿using BarcelonaStore.Models;
+﻿using BarcelonaStore.DataAccess.Repository.IRepository;
+using BarcelonaStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Barcelona_Store.Controllers;
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+     private readonly ILogger<HomeController> _logger;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
 
     public IActionResult Index()
     {
-        return View();
+        IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,MaterialType");
+        return View(productList);
     }
+    public IActionResult Details(int productId)
+    {
+        ShoppingCart cartObj = new()
+        {
+            Count = 1,
+            ProductId = productId,
+            Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == productId, includeProperties: "Category,MaterialType"),
+        };
 
+        return View(cartObj);
+    }
     public IActionResult Privacy()
     {
         return View();
