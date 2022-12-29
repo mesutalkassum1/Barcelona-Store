@@ -1,4 +1,4 @@
-﻿using Barcelona_Store.Data;
+﻿using BarcelonaStore.DataAccess;
 using BarcelonaStore.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
