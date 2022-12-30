@@ -11,6 +11,7 @@ namespace BarcelonaStore.DataAccess.Repository.IRepository
         ICategoryRepository Category { get; }
         IMaterialTypeRepository MaterialType { get; }
         IProductRepository Product { get; }
+        ICompanyRepository Company { get; }
         void Save();
     }
 }

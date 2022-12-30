@@ -13,5 +13,7 @@ namespace BarcelonaStore.DataAccess
         public DbSet<Category> Categories { get; set; }
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<Company> companies { get; set; }
     }
 }
