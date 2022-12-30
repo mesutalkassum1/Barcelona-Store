@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Barcelona_Store.Controllers;
+[Area("Admin")]
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
