@@ -5,11 +5,11 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barcelona-Store", "Barcelona-Store\Barcelona-Store.csproj", "{60076D23-EA42-47C7-BCCA-73758D89DEF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcelonaStore.DataAccess", "BarcelonaStore.DataAccess\BarcelonaStore.DataAccess.csproj", "{08071A40-22F5-4DCD-8A9A-85B7F47A9737}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcelonaStore.DataAccess", "BarcelonaStore.DataAccess\BarcelonaStore.DataAccess.csproj", "{08071A40-22F5-4DCD-8A9A-85B7F47A9737}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcelonaStore.Models", "BarcelonaStore.Models\BarcelonaStore.Models.csproj", "{176E95E6-F735-4E4F-AFC7-914628F6A01E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcelonaStore.Models", "BarcelonaStore.Models\BarcelonaStore.Models.csproj", "{176E95E6-F735-4E4F-AFC7-914628F6A01E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcelonaStore.Utility", "BarcelonaStore.Utility\BarcelonaStore.Utility.csproj", "{E50E9F8A-BBB9-41CE-B4FB-CAA351B16D44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarcelonaStore.Utility", "BarcelonaStore.Utility\BarcelonaStore.Utility.csproj", "{E50E9F8A-BBB9-41CE-B4FB-CAA351B16D44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
