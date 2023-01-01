@@ -2,11 +2,14 @@
 using BarcelonaStore.DataAccess.Repository.IRepository;
 using BarcelonaStore.Models;
 using BarcelonaStore.Models.ViewModels;
+using BarcelonaStore.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Barcelona_Store.Controllers;
 [Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
